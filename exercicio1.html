@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabuada</title>
+
+<style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        padding:20px;
+    }
+
+    #mult{
+        font-size: 28px;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    input{
+        padding:5px;
+        width:80px;
+    }
+
+    button{
+        padding:5px 10px;
+        cursor:pointer;
+    }
+
+    table{
+        margin-top:20px;
+        border-collapse: collapse;
+        width:300px;
+    }
+
+    td, th{
+        border:1px solid #ccc;
+        padding:8px;
+        text-align:center;
+    }
+
+    .certo{
+        color:green;
+        font-weight:bold;
+    }
+
+    .errado{
+        color:red;
+        font-weight:bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div id="mult"></div>
+
+<div>
+    Resposta:
+    <input type="number" id="nome">
+    <button id="verificar">Verificar</button>
+</div>
+
+<table id="tabela">
+    <tr>
+        <th>Conta</th>
+        <th>Resultado</th>
+        <th>Status</th>
+    </tr>
+</table>
+
+<script>
+
+window.onload = inicio;
+
+let resultados = [];
+let x = 0;
+
+let verificar;
+let text;
+let mult;
+let tabela;
+
+function inicio()
+{
+    verificar = document.getElementById("verificar");
+    text = document.getElementById("nome");
+    mult = document.getElementById("mult");
+    tabela = document.getElementById("tabela");
+
+    verificar.addEventListener("click", calcular);
+
+    // Vetor com os resultados da tabuada
+    for(let i = 0; i <= 10; i++)
+    {
+        resultados[i] = 7 * i;
+    }
+
+    mostrarConta();
+}
+
+function mostrarConta()
+{
+    if(x <= 10)
+    {
+        mult.innerHTML = "7 × " + x;
+    }
+    else
+    {
+        mult.innerHTML = "Tabuada finalizada!";
+    }
+}
+
+function calcular()
+{
+    if(x > 10)
+        return;
+
+    let resposta = Number(text.value);
+
+    let linha = tabela.insertRow();
+
+    let colConta = linha.insertCell(0);
+    let colResultado = linha.insertCell(1);
+    let colStatus = linha.insertCell(2);
+
+    colConta.innerHTML = "7 × " + x;
+
+    // Verifica se acertou
+    if(resposta == resultados[x])
+    {
+        colResultado.innerHTML = resposta;
+        colStatus.innerHTML = "✔";
+        colStatus.className = "certo";
+
+        // Vai para próxima conta
+        x++;
+    }
+    else
+    {
+        colResultado.innerHTML = resposta;
+        colStatus.innerHTML = "✖";
+        colStatus.className = "errado";
+    }
+
+    text.value = "";
+    text.focus();
+
+    mostrarConta();
+}
+
+</script>
+
+</body>
+</html>
